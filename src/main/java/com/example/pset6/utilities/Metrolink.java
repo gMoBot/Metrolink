@@ -48,7 +48,7 @@ public class Metrolink {
         Time timeUntilArrival = new Time();
         List<Time> milliList = timeUntilArrival.getTimeUntilArrival(arrivalTimes);
         int minutesUntilNextTrain = timeUntilArrival.NextArrival(milliList);
-        appOutput.print(String.format(" %d until next scheduled train...", minutesUntilNextTrain));
+        appOutput.print(String.format(" %d minutes until next scheduled train...", minutesUntilNextTrain));
 
     }
 
