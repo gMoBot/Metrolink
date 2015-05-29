@@ -1,8 +1,7 @@
 package com.example.pset6.dao;
 
-import com.example.pset6.utilities.AppOutput;
-import com.example.pset6.utilities.MetrolinkDao;
-import com.example.pset6.utilities.Stop;
+import com.example.pset6.utilities.*;
+import com.example.pset6.utilities.Time;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,6 +35,41 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         }
     }
 
+    public List<Stop> validateStop(String stationName) {
+        try (Connection connection = getConnection();){
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM stops WHERE stop_name=?");
+            preparedStatement.setString(1, stationName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Stop> validStops = new ArrayList<Stop>();
+            Stop stop = new Stop();
+            stop.setStopName(resultSet.getString("stop_name"));
+            stop.setStopDescription(resultSet.getString("stop_desc"));
+            stop.setStopID(resultSet.getInt("stop_id"));
+            validStops.add(stop);
+            return validStops;
+        } catch (SQLException e){
+        throw new RuntimeException("Error validating stop");
+        }
+    }
+
+    // TODO: change return type
+    public List<Time> nextTrainTime(int stopId) {
+        try (Connection connection = getConnection();){
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
+            preparedStatement.setInt(1, stopId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Time> arrivalTimes = new ArrayList<Time>();
+            while (resultSet.next()) {
+                Time time = new Time();
+                time.setArrivalTime(resultSet.getString("arrival_time"));
+                arrivalTimes.add(time);
+            }
+            return arrivalTimes;
+        } catch (SQLException e){
+            throw new RuntimeException("Error retrieving train arrival times");
+        }
+    }
     private static Connection getConnection() throws SQLException {
         try {
             Class.forName(ORG_SQLITE_JDBC);

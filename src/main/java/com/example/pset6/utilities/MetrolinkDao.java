@@ -8,5 +8,7 @@ import java.util.List;
 public interface MetrolinkDao {
 
     public List<Stop> getStopsAllStops();
+    public List<Stop> validateStop(String stationName);
+    public List<Time> nextTrainTime(int stopId);
 
-}
+    }

@@ -6,6 +6,7 @@ package com.example.pset6.utilities;
 public class Stop {
     private String stopName;
     private String stopDescription;
+    private int stopId;
 
     public String getStopName(){
         return stopName;
@@ -19,4 +20,8 @@ public class Stop {
     public void setStopDescription(String stopDescription){
         this.stopDescription = stopDescription;
     }
+    public void setStopID(int stopID) {
+        this.stopId = stopID;
+    }
+    public int getStopId() {return stopId;}
 }
