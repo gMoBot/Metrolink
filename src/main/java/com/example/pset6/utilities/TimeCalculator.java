@@ -32,7 +32,6 @@ public class TimeCalculator extends Time {
     }
 
     public int nextArrival(List<Time> milliList, long current){
-//        long currentTime = current;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -44,12 +43,6 @@ public class TimeCalculator extends Time {
         long largestTime = largestListMember.getMilliTime();
         long bufferTime = secondsElapsed;
 
-////         only for testing
-//        int bigTime = (int) largestTime;
-//        int firstbuff = (int) bufferTime;
-//        System.out.format("largest = %d %d currentTime %d \n", firstbuff, bigTime, currentTime);
-
-
         for (Time time : milliList){
             long x = time.getMilliTime();
             if (x > bufferTime){
@@ -60,15 +53,9 @@ public class TimeCalculator extends Time {
                     bufferTime = x;
                 }
             }
-            else {
-                continue;
-            }
         }
-//        int convLargest = (int) bufferTime;
-//        int convCurrent = (int) currentTime;
 
         int timeUntilArrival = (int) Math.abs(((bufferTime - secondsElapsed)) / 60);
-//        System.out.format("largest = %d current =%d time= %d\n", convLargest, convCurrent, timeUntilArrival);
 
         return timeUntilArrival;
     }

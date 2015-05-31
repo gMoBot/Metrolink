@@ -24,19 +24,12 @@ public class Metrolink {
         Console console = System.console();
 
         List<Stop> stopsAllStops1 = getAllStops();
-
-        System.out.println("Which station are you at? ");
-
+        appOutput.print("Which station are you at? ");
         int stopId = getStopId(input);
+        appOutput.print("Calculating time until next arrival... ");
 
-        System.out.format("Stop id is: %d\n", stopId);
-//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-//        Date date = new Date();
-//        String currentTime = timeFormat.format(date);
         List<Time> arrivalTimes = metrolinkDao.nextTrainTime(stopId);
-
         int minutesUntilNextTrain = getMinutesUntilNextTrain(arrivalTimes);
-
         appOutput.print(String.format(" %d minutes until next scheduled train...", minutesUntilNextTrain));
 
     }
@@ -54,9 +47,7 @@ public class Metrolink {
         String stationName = input.nextLine().toUpperCase();
         List<Stop> returnedStops = metrolinkDao.validateStop(stationName);
         int stopId = 0;
-        //TODO: remove for statement
         for (Stop stop : returnedStops) {
-            appOutput.print(String.format(" %s is a valid stop...", stop.getStopName()));
             stopId = stop.getStopId();
         }
         return stopId;

@@ -1,15 +1,10 @@
 import com.example.pset6.dao.SQLiteJDBCDao;
-import com.example.pset6.utilities.MetrolinkDao;
-import com.example.pset6.utilities.Stop;
 import com.example.pset6.utilities.Time;
 import com.example.pset6.utilities.TimeCalculator;
-import junit.framework.Assert;
 import org.junit.Test;
 
-import java.util.Calendar;
 import java.util.List;
 
-import static com.example.pset6.dao.SQLiteJDBCDao.*;
 import static junit.framework.TestCase.assertEquals;
 
 /**
