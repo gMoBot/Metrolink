@@ -52,7 +52,6 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         }
     }
 
-    // TODO: change return type
     public List<Time> nextTrainTime(int stopId) {
         try (Connection connection = getConnection();){
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
@@ -70,6 +69,7 @@ public class SQLiteJDBCDao implements MetrolinkDao {
             throw new RuntimeException("Error retrieving train arrival times");
         }
     }
+
     private static Connection getConnection() throws SQLException {
         try {
             Class.forName(ORG_SQLITE_JDBC);
