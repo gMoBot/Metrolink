@@ -1,7 +1,9 @@
 package com.example.pset6.utilities;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.io.Console;
 import java.util.Calendar;
@@ -11,8 +13,11 @@ import java.util.Scanner;
 /**
  * Created by garrettcoggon on 5/27/15.
  */
+@Component
 public class Metrolink {
 
+    public Metrolink(){
+    }
     public static void main(String[] varArgs){
         ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
         Metrolink metrolink = (Metrolink) context.getBean("metrolink");
@@ -61,13 +66,15 @@ public class Metrolink {
         return stopsAllStops;
     }
 
+    @Autowired
     private MetrolinkDao metrolinkDao;
+    @Autowired
     private AppOutput appOutput;
 
-    public void setMetrolinkDao(MetrolinkDao metrolinkDao) {
-        this.metrolinkDao = metrolinkDao;
-    }
-    public void setAppOutput(AppOutput appOutput) {
-        this.appOutput = appOutput;
-    }
+//    public void setMetrolinkDao(MetrolinkDao metrolinkDao) {
+//        this.metrolinkDao = metrolinkDao;
+//    }
+//    public void setAppOutput(AppOutput appOutput) {
+//        this.appOutput = appOutput;
+//    }
 }

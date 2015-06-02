@@ -3,6 +3,7 @@ package com.example.pset6.utilities;
 /**
  * Created by garrettcoggon on 5/28/15.
  */
+
 public class Stop {
     private String stopName;
     private String stopDescription;
