@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class TimeCalculator extends Time {
 
-    public List getTimeUntilArrival(List<Time> times){
+    public List<Time> getTimeUntilArrival(List<Time> times){
         List<Time> milliList = new ArrayList<Time>();
         for (Time time : times){
             buildmilliList(milliList, time);
