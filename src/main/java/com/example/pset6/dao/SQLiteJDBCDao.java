@@ -37,21 +37,6 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         List list = criteria.list();
         sessionFactoryBean.getCurrentSession().getTransaction().commit();
         return list;
-
-//        try (Connection connection = getConnection();){
-//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM stops");
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            List<Stop> stops = new ArrayList<Stop>();
-//            while (resultSet.next()) {
-//                Stop stop = new Stop();
-//                stop.setStopName(resultSet.getString("stop_name"));
-//                stop.setStopDescription(resultSet.getString("stop_desc"));
-//                stops.add(stop);
-//            }
-//            return stops;
-//        } catch (SQLException e){
-//            throw new RuntimeException("Error retrieving stops");
-//        }
     }
 
     public List<Stop> validateStop(String stationName) {
@@ -62,21 +47,6 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         List list = criteria.list();
         sessionFactoryBean.getCurrentSession().getTransaction().commit();
         return list;
-
-//        try (Connection connection = getConnection();){
-//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM stops WHERE stop_name=?");
-//            preparedStatement.setString(1, stationName);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            List<Stop> validStops = new ArrayList<Stop>();
-//            Stop stop = new Stop();
-//            stop.setStopName(resultSet.getString("stop_name"));
-//            stop.setStopDescription(resultSet.getString("stop_desc"));
-//            stop.setStopID(resultSet.getInt("stop_id"));
-//            validStops.add(stop);
-//            return validStops;
-//        } catch (SQLException e){
-//        throw new RuntimeException("Error validating stop");
-//        }
     }
 
     public List nextTrainTime(int stopId) {
@@ -125,7 +95,4 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         return DriverManager.getConnection(JDBC_SQLITE_METROLINK_DB);
     }
 
-//    public void setAppOutput(AppOutput appOutput) {
-//        this.appOutput = appOutput;
-//    }
 }

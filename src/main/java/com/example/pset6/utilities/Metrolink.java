@@ -31,8 +31,7 @@ public class Metrolink {
         int stopId = getStopId(input);
         appOutput.print("Calculating time until next arrival... ");
 
-//        List<Time> arrivalTimes = getArrivalTimes(stopId);
-//        appOutput.print(String.format("%d", );
+
         List<Time> arrivalTimes = metrolinkDao.nextTrainTime(stopId);
         int minutesUntilNextTrain = getMinutesUntilNextTrain(arrivalTimes);
         appOutput.print(String.format("%d minutes until next scheduled train...", minutesUntilNextTrain));
@@ -40,7 +39,6 @@ public class Metrolink {
     }
 
     private int getMinutesUntilNextTrain(List<Time> arrivalTimes) {
-//        Time timeUntilArrival = new Time();
         TimeCalculator timeCalculator = new TimeCalculator();
         List<Time> milliList = timeCalculator.getTimeUntilArrival(arrivalTimes);
         Calendar c = Calendar.getInstance();
@@ -65,27 +63,10 @@ public class Metrolink {
         }
         return stopsAllStops;
     }
-//    public List<Time> getArrivalTimes(int stopId){
-//        List list = metrolinkDao.nextTrainTime(stopId);
-//        List<Time> arrivalTimes;
-//        Map<String, Time> timeMap = new HashMap<>();
-//        timeMap.put("arrival_time", list.getArrivalTime)
-////        for (Time time : arrivalTimes){
-////            time.setArrivalTime(time.getArrivalTime());
-////        }
-//        return arrivalTimes;
-//    }
-
 
     @Autowired
     private MetrolinkDao metrolinkDao;
     @Autowired
     private AppOutput appOutput;
 
-//    public void setMetrolinkDao(MetrolinkDao metrolinkDao) {
-//        this.metrolinkDao = metrolinkDao;
-//    }
-//    public void setAppOutput(AppOutput appOutput) {
-//        this.appOutput = appOutput;
-//    }
 }
