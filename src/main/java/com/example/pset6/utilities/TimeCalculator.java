@@ -7,18 +7,18 @@ import java.util.List;
 /**
  * Created by garrettcoggon on 5/30/15.
  */
-public class TimeCalculator extends Time {
+public class TimeCalculator {
 
-    public List<Time> getTimeUntilArrival(List<Time> times){
-        List<Time> milliList = new ArrayList<Time>();
+    public List<CombinedTime> getTimeUntilArrival(List<Time> times){
+        List<CombinedTime> milliList = new ArrayList<CombinedTime>();
         for (Time time : times){
             buildmilliList(milliList, time);
         }
         return milliList;
     }
 
-    private void buildmilliList(List<Time> milliList, Time time) {
-        Time combinedTime = new Time();
+    private void buildmilliList(List<CombinedTime> milliList, Time time) {
+        CombinedTime combinedTime = new CombinedTime();
         combinedTime.setArrivalTime(time.getArrivalTime());
         String[] splitTime = time.getArrivalTime().split(":");
         int[] intArray = new int[splitTime.length];
@@ -26,12 +26,12 @@ public class TimeCalculator extends Time {
             String timeString = splitTime[i];
             intArray[i] = Integer.parseInt(timeString);
         }
-        int secTime = ((intArray[0] * 60 * 60) + (intArray[1] * 60) + intArray[2]);
+        long secTime = ((intArray[0] * 60 * 60) + (intArray[1] * 60) + intArray[2]);
         combinedTime.setMilliTime(secTime);
         milliList.add(combinedTime);
     }
 
-    public int nextArrival(List<Time> milliList, long current){
+    public int nextArrival(List<CombinedTime> milliList, long current){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -39,12 +39,12 @@ public class TimeCalculator extends Time {
         c.set(Calendar.MILLISECOND, 0);
         long secondsElapsed = (current - c.getTimeInMillis()) / 1000;
 
-        Time largestListMember = milliList.get(milliList.size() - 1);
+        CombinedTime largestListMember = milliList.get(milliList.size() - 1);
         long largestTime = largestListMember.getMilliTime();
         long bufferTime = secondsElapsed;
 
-        for (Time time : milliList){
-            long x = time.getMilliTime();
+        for (CombinedTime combinedTime : milliList){
+            long x = combinedTime.getMilliTime();
             if (x > bufferTime){
                 final long diff = Math.abs(x - bufferTime);
 
