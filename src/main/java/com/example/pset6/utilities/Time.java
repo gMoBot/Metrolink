@@ -15,13 +15,13 @@ public class Time {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name="stop_id", unique = true, nullable = false)
-    private Integer stopId;
+    private int stopId;
     @Column(name = "arrival_time")
     private String arrivalTime;
 
     public String getArrivalTime(){return arrivalTime;}
     public void setArrivalTime(String arrivalTime){this.arrivalTime = arrivalTime;}
-    public Integer getStopId() {
+    public int getStopId() {
         return stopId;
     }
 

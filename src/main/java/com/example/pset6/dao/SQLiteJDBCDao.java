@@ -49,33 +49,32 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         return list;
     }
 
-    public List<Time> nextTrainTime(int thisStopId) {
+    public List<Time> nextTrainTime(int stopId) {
+//        // TODO: Changing this hibernate criteria returns duplicates of first row queried
+//        // unable to resolve...
+////        List<Time> returnedTime;
+//        sessionFactoryBean.getCurrentSession().beginTransaction();
+//        Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Time.class);
+//        criteria.add(Restrictions.eq("stopId", stopId));
+//        List list = criteria.list();
+//        sessionFactoryBean.getCurrentSession().getTransaction().commit();
+//        return list;
 
-//        List<Time> returnedTime;
-        sessionFactoryBean.getCurrentSession().beginTransaction();
-        Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Time.class);
-//        criteria.setProjection(Projections.property("arrivalTime"));
-        criteria.add(Restrictions.eq("stopId", thisStopId));
-//        criteria.addOrder(Property.forName("arrivalTime").asc());
-        List list = criteria.list();
-        sessionFactoryBean.getCurrentSession().getTransaction().commit();
-        return list;
+        try (Connection connection = getConnection();){
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
+            preparedStatement.setInt(1, stopId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-//        try (Connection connection = getConnection();){
-//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
-//            preparedStatement.setInt(1, stopId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            List<Time> arrivalTimes = new ArrayList<Time>();
-//            while (resultSet.next()) {
-//                Time time = new Time();
-//                time.setArrivalTime(resultSet.getString("arrival_time"));
-//                arrivalTimes.add(time);
-//            }
-//            return arrivalTimes;
-//        } catch (SQLException e){
-//            throw new RuntimeException("Error retrieving train arrival times");
-//        }
+            List<Time> arrivalTimes = new ArrayList<Time>();
+            while (resultSet.next()) {
+                Time time = new Time();
+                time.setArrivalTime(resultSet.getString("arrival_time"));
+                arrivalTimes.add(time);
+            }
+            return arrivalTimes;
+        } catch (SQLException e){
+            throw new RuntimeException("Error retrieving train arrival times");
+        }
     }
 
     // TODO: this goes when transition complete
