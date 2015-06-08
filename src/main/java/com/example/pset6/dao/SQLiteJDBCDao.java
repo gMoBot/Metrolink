@@ -51,6 +51,7 @@ public class SQLiteJDBCDao implements MetrolinkDao {
 
     public List<Time> nextTrainTime(int stopId) {
 //        // TODO: Changing this hibernate criteria returns duplicates of first row queried
+          // SQL shows hibernate queries stops instead of stop_times
 //        // unable to resolve...
 ////        List<Time> returnedTime;
 //        sessionFactoryBean.getCurrentSession().beginTransaction();
