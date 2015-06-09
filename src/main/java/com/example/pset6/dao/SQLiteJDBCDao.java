@@ -4,12 +4,12 @@ import com.example.pset6.utilities.*;
 import com.example.pset6.utilities.Time;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
+import org.hibernate.transform.DistinctRootEntityResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.naming.ldap.PagedResultsControl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,39 +43,39 @@ public class SQLiteJDBCDao implements MetrolinkDao {
 
         sessionFactoryBean.getCurrentSession().beginTransaction();
         Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Stop.class);
-        criteria.add(Restrictions.eq("stopName", stationName));
+        criteria.add(Restrictions.like("stopName", stationName, MatchMode.EXACT));
         List list = criteria.list();
         sessionFactoryBean.getCurrentSession().getTransaction().commit();
         return list;
     }
 
-    public List<Time> nextTrainTime(int stopId) {
+    public List<Time> nextTrainTime(int thisStopId) {
 //        // TODO: Changing this hibernate criteria returns duplicates of first row queried
-          // SQL shows hibernate queries stops instead of stop_times
-//        // unable to resolve...
-////        List<Time> returnedTime;
-//        sessionFactoryBean.getCurrentSession().beginTransaction();
-//        Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Time.class);
-//        criteria.add(Restrictions.eq("stopId", stopId));
-//        List list = criteria.list();
-//        sessionFactoryBean.getCurrentSession().getTransaction().commit();
-//        return list;
+//        // SQL shows hibernate queries stops instead of stop_times
+        // unable to resolve...
+//        List<Time> returnedTime;
+        sessionFactoryBean.getCurrentSession().beginTransaction();
+        Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Time.class);
+        criteria.add(Restrictions.eq("stopId", thisStopId));
+        List list = criteria.list();
+        sessionFactoryBean.getCurrentSession().getTransaction().commit();
+        return list;
 
-        try (Connection connection = getConnection();){
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
-            preparedStatement.setInt(1, stopId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            List<Time> arrivalTimes = new ArrayList<Time>();
-            while (resultSet.next()) {
-                Time time = new Time();
-                time.setArrivalTime(resultSet.getString("arrival_time"));
-                arrivalTimes.add(time);
-            }
-            return arrivalTimes;
-        } catch (SQLException e){
-            throw new RuntimeException("Error retrieving train arrival times");
-        }
+//        try (Connection connection = getConnection();){
+//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
+//            preparedStatement.setInt(1, stopId);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            List<Time> arrivalTimes = new ArrayList<Time>();
+//            while (resultSet.next()) {
+//                Time time = new Time();
+//                time.setArrivalTime(resultSet.getString("arrival_time"));
+//                arrivalTimes.add(time);
+//            }
+//            return arrivalTimes;
+//        } catch (SQLException e){
+//            throw new RuntimeException("Error retrieving train arrival times");
+//        }
     }
 
     // TODO: this goes when transition complete

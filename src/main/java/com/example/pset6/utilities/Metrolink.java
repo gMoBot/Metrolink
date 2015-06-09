@@ -57,7 +57,9 @@ public class Metrolink {
         String stationName = input.nextLine().toUpperCase();
         List<Stop> returnedStops = metrolinkDao.validateStop(stationName);
         int stopId = returnedStops.get(0).getStopId();
-//        appOutput.print(String.format("--- %d ---", stopId));
+//        for (Stop stop : returnedStops) {
+//            appOutput.print(String.format("--- %d ---", stopId));
+//        }
         return stopId;
     }
 

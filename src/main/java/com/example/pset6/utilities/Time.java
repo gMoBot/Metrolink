@@ -13,8 +13,9 @@ import java.util.*;
 public class Time {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name="stop_id", unique = true, nullable = false)
+    @Column(name="trip_id", unique = true, nullable = false)
+    private int tripId;
+    @Column(name="stop_id", unique = false, nullable = false)
     private int stopId;
     @Column(name = "arrival_time")
     private String arrivalTime;
@@ -29,4 +30,11 @@ public class Time {
         this.stopId = stopId;
     }
 
+    public int getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(int tripId) {
+        this.tripId = tripId;
+    }
 }
