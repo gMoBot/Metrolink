@@ -1,7 +1,5 @@
 import com.example.pset6.dao.SQLiteJDBCDao;
-import com.example.pset6.utilities.Stop;
-import com.example.pset6.utilities.Time;
-import com.example.pset6.utilities.TimeCalculator;
+import com.example.pset6.utilities.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +18,13 @@ public class TimeTester {
 //        // for station: broadway @ park ave id = 13597
 //        // setup
 //        SQLiteJDBCDao sqLiteJDBCDao = new SQLiteJDBCDao();
-//        Time timeUntilArrival = new Time();
 //        TimeCalculator timeCalculator = new TimeCalculator();
 //        int stopId = 13597;
 //        long current = 1433045267349L;
 //
 //        // action
 //        List<Time> arrivalTimes = sqLiteJDBCDao.nextTrainTime(stopId);
-//        List<Time> milliList = timeCalculator.getTimeUntilArrival(arrivalTimes);
+//        List<CombinedTime> milliList = timeCalculator.getTimeUntilArrival(arrivalTimes);
 //        int minutesUntilNextTrain = timeCalculator.nextArrival(milliList, current);
 //
 //        // assert

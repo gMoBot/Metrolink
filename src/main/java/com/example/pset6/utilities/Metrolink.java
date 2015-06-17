@@ -33,21 +33,13 @@ public class Metrolink {
 
 
         List<Time> arrivalTimes = metrolinkDao.nextTrainTime(stopId);
-        for (Time time : arrivalTimes) {
-            appOutput.print(String.format("--- %s --- %d", time.getArrivalTime(), time.getStopId()));
-        }
         int minutesUntilNextTrain = getMinutesUntilNextTrain(arrivalTimes);
         appOutput.print(String.format("%d minutes until next scheduled train...", minutesUntilNextTrain));
-
     }
 
     private int getMinutesUntilNextTrain(List<Time> arrivalTimes) {
         TimeCalculator timeCalculator = new TimeCalculator();
         List<CombinedTime> milliList = timeCalculator.getTimeUntilArrival(arrivalTimes);
-//        for (CombinedTime combinedTime : milliList) {
-//            int i = (int) combinedTime.getMilliTime();
-//            appOutput.print(String.format("%s,  %d", combinedTime.getArrivalTime(), i));
-//        }
         Calendar c = Calendar.getInstance();
         long current = c.getTimeInMillis();
         return timeCalculator.nextArrival(milliList, current);
@@ -57,9 +49,6 @@ public class Metrolink {
         String stationName = input.nextLine().toUpperCase();
         List<Stop> returnedStops = metrolinkDao.validateStop(stationName);
         int stopId = returnedStops.get(0).getStopId();
-//        for (Stop stop : returnedStops) {
-//            appOutput.print(String.format("--- %d ---", stopId));
-//        }
         return stopId;
     }
 

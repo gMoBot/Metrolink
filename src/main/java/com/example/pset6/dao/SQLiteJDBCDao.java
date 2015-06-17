@@ -20,10 +20,6 @@ import java.util.List;
 @Repository
 public class SQLiteJDBCDao implements MetrolinkDao {
 
-    // TODO: this goes when transition complete
-    public static final String JDBC_SQLITE_METROLINK_DB = "jdbc:sqlite:metrolink.db";
-    public static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
-
     @Autowired
     private AppOutput appOutput;
     @Autowired
@@ -50,10 +46,6 @@ public class SQLiteJDBCDao implements MetrolinkDao {
     }
 
     public List<Time> nextTrainTime(int thisStopId) {
-//        // TODO: Changing this hibernate criteria returns duplicates of first row queried
-//        // SQL shows hibernate queries stops instead of stop_times
-        // unable to resolve...
-//        List<Time> returnedTime;
         sessionFactoryBean.getCurrentSession().beginTransaction();
         Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Time.class);
         criteria.add(Restrictions.eq("stopId", thisStopId));
@@ -61,33 +53,5 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         List list = criteria.list();
         sessionFactoryBean.getCurrentSession().getTransaction().commit();
         return list;
-
-//        try (Connection connection = getConnection();){
-//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT arrival_time FROM stop_times WHERE stop_id=? ORDER BY arrival_time");
-//            preparedStatement.setInt(1, stopId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            List<Time> arrivalTimes = new ArrayList<Time>();
-//            while (resultSet.next()) {
-//                Time time = new Time();
-//                time.setArrivalTime(resultSet.getString("arrival_time"));
-//                arrivalTimes.add(time);
-//            }
-//            return arrivalTimes;
-//        } catch (SQLException e){
-//            throw new RuntimeException("Error retrieving train arrival times");
-//        }
     }
-
-    // TODO: this goes when transition complete
-
-    private static Connection getConnection() throws SQLException {
-        try {
-            Class.forName(ORG_SQLITE_JDBC);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Unable to find class for loading the database", e);
-        }
-        return DriverManager.getConnection(JDBC_SQLITE_METROLINK_DB);
-    }
-
 }
