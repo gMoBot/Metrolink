@@ -33,9 +33,9 @@ public class Metrolink {
 
 
         List<Time> arrivalTimes = metrolinkDao.nextTrainTime(stopId);
-//        for (Time time : arrivalTimes) {
-//            appOutput.print(String.format("--- %s --- %d", time.getArrivalTime(), time.getStopId()));
-//        }
+        for (Time time : arrivalTimes) {
+            appOutput.print(String.format("--- %s --- %d", time.getArrivalTime(), time.getStopId()));
+        }
         int minutesUntilNextTrain = getMinutesUntilNextTrain(arrivalTimes);
         appOutput.print(String.format("%d minutes until next scheduled train...", minutesUntilNextTrain));
 

@@ -57,6 +57,7 @@ public class SQLiteJDBCDao implements MetrolinkDao {
         sessionFactoryBean.getCurrentSession().beginTransaction();
         Criteria criteria = sessionFactoryBean.getCurrentSession().createCriteria(Time.class);
         criteria.add(Restrictions.eq("stopId", thisStopId));
+        criteria.addOrder(Order.asc("arrivalTime"));
         List list = criteria.list();
         sessionFactoryBean.getCurrentSession().getTransaction().commit();
         return list;
